@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoloCal AI Calorie Tracker</title>
+</head>
+<body>
+<h1>SoloCal AI Calorie Tracker</h1>
+<input type="text" id="foodInput" placeholder="Enter food name">
+<button onclick="getCalories()">Check Calories</button>
+<p id="result"></p>
+
+<script>
+async function getCalories() {
+    const food = document.getElementById("foodInput").value;
+    if (!food) return;
+
+    const response = await fetch("/getCalories", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ food })
+    });
+    const data = await response.json();
+    document.getElementById("result").innerText = data.calories || "No data found";
+}
+</script>
+</body>
+</html>
